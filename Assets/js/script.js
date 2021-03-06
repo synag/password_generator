@@ -1,110 +1,127 @@
 
-
+//password elements that are used for generating password characters
 var passwordElements = {
-  specialCharacter: ["&","*"], 
-  lowercase: ["a","b",],
-  upperCase: ["a", "B"],
-  number: function numerRandomn() {
-      numberRandom = Math.random
-  }
-  //Need to shuffle
+  specialCharacter: ["&", "!", "#", "$", "%", "'", "+", "-", ".", ":", ";", "<", "=", ">", "@", "?", "[", "^", "_"],
+  lowerCase: ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q,", "r", "s", "t", "u", "v", "w", "x", "y", "z"],
+  upperCase: ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"],
+  number: ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
 }
 
-//passwords are pushed into array
-var getPassword = {
-  passwordOne: [],
-  passwordTwo: [],
+//password characters are pushed into the passwordOne Array
+//PasswordTwo is set if we need to create a 90 password change rule 
+//finalPassord variable stores the final password string.
+var passwordOne = [];
+var finalPassword = "";
+var passwordTwo = [];
 
-}
+
 //global input varables 
- var inputNumberLength = 0;
- var inputCharacter = 0;
- var inputNumber= 0;
- var inputLowercase = 0;
- var inputUppercase= 0;
+var inputNumberLength = 0;
+var inputCharacter = 0;
+var inputNumber = 0;
+var inputLowercase = 0;
+var inputUppercase = 0;
+var combined = [];
 
-//prompt function
-//uppercase, lowercase, numbers, special characters
-//Need to collect input parameters and store in variables
-function inputPrompt(){
-   //need to enforce input lengt
+//prompt function - Done
+function inputPrompt() {
+  //inputNumberLength prompt // 1) need to enforce input length
+  inputNumber = prompt("Would you like numbers in password? y,n");
+  switch (inputNumber) {
+    case "y":
+      inputNumber = inputNumber;
+      break;
+    case null:
+      inputNumber = null;
+      break;
+  }
 
-   inputNumberLength = prompt("How long is your password? Minimum 8 and Max 128 characters long"); //default?
-      if (inputNumberLength >=8 && inputNumberLength <=28) {  //may need to make a string
-      inputNumberLength = inputNumberLength;
+  inputCharacter = prompt("Would you like special characters in password y,n?");
+  switch (inputCharacter) {
+    case "y":
+      inputCharacter = inputCharacter;
+      break;
+    case null:
+      inputCharacter = null;
+      break;
   }
-  else{
-       inputPrompt("You need enter character length of 8 to 28");
-   //need to stop this boolean if not fales - not 8 to 28  ---Does not stop here
+
+  inputLowercase = prompt("Would you like lowercase letters in password y,n");
+  switch (inputLowercase) {
+    case "y":
+      inputLowercase = inputLowercase;
+      break;
+    case null:
+      inputLowercase = null;
+      break;
   }
-   inputCharacter = prompt("Do you want to use special characters? y or n"); //make lowercase
-      if(inputCharacter==="y"){ 
-        inputCharacter = inputCharacter;
-      }
-     else{
-       inputCharacter = null;
-     }
-   inputNumber= prompt("Do you want to use number? y or no");
-   if(inputNumber==="y"){ 
-    inputNumber = inputNumber;
+  inputUppercase = prompt("Would you like Uppercase letters in password? y,n");
+  switch (inputUppercase) {
+    case "y":
+      inputUppercase = inputUppercase;
+      break;
+    case null:
+      inputUppercase = null;
+      break;
   }
-  else{
-    inputCharacter = null;
+
+  inputNumberLength = prompt("Choose character length between 8-28");
+  if (inputNumberLength >= 8 && inputNumberLength <= 128) {
+    inputNumberLength = inputNumberLength;
+
   }
-  
-   inputLowercase = prompt("Do you want to use lowercase letter? y or n");
-   if(inputNumber==="y"){ 
-    inputLowercase = inputLowercase;
-   }
-   else{
-    inputLowercase = null;
-  }
-   inputUppercase= prompt("Do you want to use upperCase letters, y or n");
-  
-   if(inputNumber==="y"){ 
-    inputLowercase = inputLowercase;
-   }
-   else{
-    inputUppercase = null;
 }
-}
 
 
-//  //need to use input parements to getpassword array,
-// identify array that are null and don't include
-//   put in a new array,
-//    and random sort,
-//   resuffle original array 
+
+
+//finction generates password 
+
 function generatePassword() {
 
-  //need to shuffle array here may thing of creating a shuffle All arrays need to be shuffled
- 
+  //Input prompt function is called when we call the generate password function
+  inputPrompt()
+
+//If statement is true, provides the number length parameters between 8 and 128. 
   
-   //need to stop this boolean if not fales - not 8 to 28  ---Does not stop here
+  if (inputNumberLength > 8 && inputNumberLength < 128) {
 
-  for (var i = 0; i < inputNumberLength; i++) {
-
-    if(inputCharacter === "y"){
-      getPassword.passwordOne.push[passwordElements.specialCharacter[i]] 
+    if (inputCharacter === "y") {
+      passwordOne.push(...passwordElements.specialCharacter); //If true, pushes the special characters elements into the passwordOne array
     }
-    else{
-      return
-    }
-    getPassword.passwordOne.push[passwordElements.lowercase[i]] 
-    getPassword.passwordOne.push[passwordElements.upperCase[i]] 
-    getPassword.passwordOne.push[passwordElements.number] 
 
-    
+    if (inputLowercase === "y") {
+      passwordOne.push(...passwordElements.lowerCase); //If true, pushes the lowerCase elements into the passwordOne array
+    }
+
+    if (inputUppercase === "y") {
+      passwordOne.push(...passwordElements.upperCase); //If true, pushes the upperCase elements into the passwordOne array
+
+    }
+    if (inputNumber === "y") {
+      passwordOne.push(...passwordElements.number); //If true, pushes the number elements into the passwordOne array
+    }
+
+    for (var i = 0; i <= inputNumberLength; i++) {  //for loop, loops through the password array and randomly selects characters in the array and stores in the final password variable. 
+      finalPassword = finalPassword + passwordOne[Math.floor(Math.random() * passwordOne.length)];
+    }
+//returns the finalpassword variable to function so that it is accessible by the function
+    return finalPassword;
+
+  } else {
+    alert("enter a valid password length"); //else if false (the number length is not between 8 and 128) then alert "enter valid password length"
+    inputPrompt(); //users have to re-enter all the password parameters 
   }
+
 }
 
- // Write password to the #password input
+
+// Write password to the #password input
 function writePassword() {
   var password = generatePassword();
   var passwordText = document.querySelector("#password");
 
 
-  //change passwordArray.passwordOne
   passwordText.value = password;
 
 }
@@ -120,11 +137,8 @@ var generateBtn = document.querySelector("#generate");
 
 // ...............................
 // Add event listener to generate button
-inputPrompt()
 
 generateBtn.addEventListener("click", writePassword);
 
-inputPrompt();
-generatePassword();
-// console.log(inputNumberLength);
-console.log(getPassword.passwordOne)
+
+
