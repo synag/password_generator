@@ -21,11 +21,10 @@ var inputCharacter = 0;
 var inputNumber = 0;
 var inputLowercase = 0;
 var inputUppercase = 0;
-var combined = [];
 
-//prompt function - Done
+//prompt function 
 function inputPrompt() {
-  //inputNumberLength prompt // 1) need to enforce input length
+  //input number prompt questions, yes or no
   inputNumber = prompt("Would you like numbers in password? y,n");
   switch (inputNumber) {
     case "y":
@@ -35,7 +34,7 @@ function inputPrompt() {
       inputNumber = null;
       break;
   }
-
+ //input number character prompt questions, yes or no
   inputCharacter = prompt("Would you like special characters in password y,n?");
   switch (inputCharacter) {
     case "y":
@@ -45,7 +44,7 @@ function inputPrompt() {
       inputCharacter = null;
       break;
   }
-
+ //input lowercase prompt questions, yes or no
   inputLowercase = prompt("Would you like lowercase letters in password y,n");
   switch (inputLowercase) {
     case "y":
@@ -55,6 +54,7 @@ function inputPrompt() {
       inputLowercase = null;
       break;
   }
+   //input uppercase prompt questions, yes or no
   inputUppercase = prompt("Would you like Uppercase letters in password? y,n");
   switch (inputUppercase) {
     case "y":
@@ -64,7 +64,7 @@ function inputPrompt() {
       inputUppercase = null;
       break;
   }
-
+  //input length prompt sets the password character length
   inputNumberLength = prompt("Choose character length between 8-28");
   if (inputNumberLength >= 8 && inputNumberLength <= 128) {
     inputNumberLength = inputNumberLength;
@@ -73,9 +73,7 @@ function inputPrompt() {
 }
 
 
-
-
-//finction generates password 
+//function generates password 
 
 function generatePassword() {
 
@@ -84,28 +82,28 @@ function generatePassword() {
 
 //If statement is true, provides the number length parameters between 8 and 128. 
   
-  if (inputNumberLength > 8 && inputNumberLength < 128) {
+  if (inputNumberLength => 8 && inputNumberLength <= 128) {
 
     if (inputCharacter === "y") {
-      passwordOne.push(...passwordElements.specialCharacter); //If true, pushes the special characters elements into the passwordOne array
+      passwordOne.push(...passwordElements.specialCharacter); //If true, push the special characters elements into the passwordOne array
     }
 
     if (inputLowercase === "y") {
-      passwordOne.push(...passwordElements.lowerCase); //If true, pushes the lowerCase elements into the passwordOne array
+      passwordOne.push(...passwordElements.lowerCase); //If true, push the lowerCase elements into the passwordOne array
     }
 
     if (inputUppercase === "y") {
-      passwordOne.push(...passwordElements.upperCase); //If true, pushes the upperCase elements into the passwordOne array
+      passwordOne.push(...passwordElements.upperCase); //If true, push the upperCase elements into the passwordOne array
 
     }
     if (inputNumber === "y") {
-      passwordOne.push(...passwordElements.number); //If true, pushes the number elements into the passwordOne array
+      passwordOne.push(...passwordElements.number); //If true, push the number elements into the passwordOne array
     }
 
-    for (var i = 0; i <= inputNumberLength; i++) {  //for loop, loops through the password array and randomly selects characters in the array and stores in the final password variable. 
+    for (var i = 0; i <= inputNumberLength; i++) {  //for loop, loops through the passwordOne array and randomly selects characters in the array and stores in the final password variable. 
       finalPassword = finalPassword + passwordOne[Math.floor(Math.random() * passwordOne.length)];
     }
-//returns the finalpassword variable to function so that it is accessible by the function
+//returns the finalpassword variable to the function to return the finalpassword elements (new generated password)
     return finalPassword;
 
   } else {
@@ -118,15 +116,14 @@ function generatePassword() {
 
 // Write password to the #password input
 function writePassword() {
-  var password = generatePassword();
-  var passwordText = document.querySelector("#password");
+  passwordOne =[] //clears the array so that old password characters are not selected
+  finalPassword = "" //clears the variable so that old password does not appear on the html
+  var password = generatePassword(); //stores the generatePassword function "return results" into the password variable 
+  var passwordText = document.querySelector("#password"); 
 
 
-  passwordText.value = password;
-
+  passwordText.value = password; //adds new password string onto the html text area tag
 }
-
-//write a writePassword function
 
 
 // Assignment Code (this adds the code to the html)
@@ -134,11 +131,13 @@ var generateBtn = document.querySelector("#generate");
 
 
 
-
 // ...............................
 // Add event listener to generate button
 
 generateBtn.addEventListener("click", writePassword);
+
+// console.log(passwordOne);
+// console.log(finalPassword);
 
 
 
