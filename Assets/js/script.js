@@ -65,7 +65,7 @@ function inputPrompt() {
       break;
   }
   //input length prompt sets the password character length
-  inputNumberLength = prompt("Choose character length between 8-28");
+  inputNumberLength = prompt("Choose character length between 8-128");
   if (inputNumberLength >= 8 && inputNumberLength <= 128) {
     inputNumberLength = inputNumberLength;
 
